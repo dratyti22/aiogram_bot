@@ -26,7 +26,10 @@ async def main():
     dp.shutdown.register(stop_bot)
 
     # dp.include_router(technical_service.router)
-    dp.include_routers(basic.router, types.router,group_games.router, username.router)
+    dp.include_router(basic.router)
+    dp.include_router(types.router)
+    dp.include_router(group_games.router)
+    dp.include_router(username.router)
 
     try:
         await bot.delete_webhook(drop_pending_updates=True)
