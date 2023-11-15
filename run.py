@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import os
 from core.handlers import group_games, username
 from core.filters import technical_service
+from core.keyboards import command
 
 
 async def start_bot(bot: Bot):
@@ -26,6 +27,7 @@ async def main():
     dp.shutdown.register(stop_bot)
 
     # dp.include_router(technical_service.router)
+    dp.include_router(command.router)
     dp.include_router(basic.router)
     dp.include_router(types.router)
     dp.include_router(group_games.router)

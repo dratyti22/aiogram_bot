@@ -1,7 +1,10 @@
 from aiogram.types import BotCommand, BotCommandScopeDefault
-from aiogram import Bot
+from aiogram import Bot, Router
+from aiogram.filters import CommandStart
+router = Router()
 
 
+@router.message(CommandStart())
 async def get_command(bot: Bot):
     command = [
         BotCommand(

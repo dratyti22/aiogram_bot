@@ -2,7 +2,6 @@ from aiogram import F, Router, Bot
 from aiogram.filters import Command
 from aiogram.types import Message, ReplyKeyboardRemove, Chat
 from core.keyboards.reply import replay_keyboard
-from core.keyboards.command import get_command
 from aiogram.enums import MessageEntityType
 
 router = Router()
@@ -10,7 +9,6 @@ router = Router()
 
 @router.message(Command('start'))
 async def get_start(message: Message, bot: Bot):
-    await get_command(bot)
     await message.answer('Привет!', reply_markup=replay_keyboard())
 
 
