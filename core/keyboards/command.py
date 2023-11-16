@@ -16,5 +16,9 @@ async def get_command(bot: Bot):
             command='basketball',
             description='это баскетболл'
         ),
+        BotCommand(
+            command='happymonth',
+            description='предсказать твою судьбу'
+        ),
     ]
     await bot.set_my_commands(command, scope=BotCommandScopeDefault())

@@ -4,8 +4,23 @@ from aiogram.types import Message, ReplyKeyboardRemove, Chat
 from core.keyboards.reply import replay_keyboard
 from core.keyboards.command import get_command
 from aiogram.enums import MessageEntityType
+from core.middleware.idmiddleware import UserIntervalIDMiddleware, HappyMonthMiddleware
 
 router = Router()
+
+
+@router.message(Command('happymonth'))
+async def get_happymonth(
+        message: Message,
+        interval_id: int,
+        is_happy_month: bool
+):
+    phrases = [f'Ваш ID в нашем сервисе: {interval_id}']
+    if is_happy_month:
+        phrases.append("Сейчас ваш счастливый месяц!")
+    else:
+        phrases.append("В этом месяце будьте осторожнее...")
+    await message.answer('. '.join(phrases))
 
 
 @router.message(Command('start'))

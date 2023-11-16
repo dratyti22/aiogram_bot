@@ -7,6 +7,8 @@ import os
 from core.handlers import group_games, username
 from core.filters import technical_service
 from core.middleware.somemiddleware import SomeMiddleware
+from core.middleware.slowtimemiddleware import SlowTimeMiddleware
+from core.middleware.idmiddleware import UserIntervalIDMiddleware, HappyMonthMiddleware
 
 
 async def start_bot(bot: Bot):
@@ -23,7 +25,10 @@ async def main():
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
     dp = Dispatcher()
 
+    dp.update.outer_middleware(UserIntervalIDMiddleware())
+    dp.message.middleware(HappyMonthMiddleware())
     dp.message.middleware(SomeMiddleware())
+    dp.message.middleware(SlowTimeMiddleware(sleep_time=1))
 
     dp.startup.register(start_bot)
     dp.shutdown.register(stop_bot)
