@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import os
 from core.handlers import group_games, username
 from core.filters import technical_service
+from core.middleware.somemiddleware import SomeMiddleware
 
 
 async def start_bot(bot: Bot):
@@ -21,6 +22,8 @@ async def main():
     bot = Bot(token=os.getenv('TOKEN'))
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
     dp = Dispatcher()
+
+    dp.message.middleware(SomeMiddleware())
 
     dp.startup.register(start_bot)
     dp.shutdown.register(stop_bot)
