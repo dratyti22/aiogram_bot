@@ -5,9 +5,9 @@ from aiogram.types import Message
 router = Router()
 
 
-@router.message(F.text)
-async def get_text(message: Message):
-    await message.answer('Это текст')
+# @router.message(F.text)
+# async def get_text(message: Message):
+#     await message.answer('Это текст')
 
 
 @router.message(F.sticker)
