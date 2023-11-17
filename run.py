@@ -9,6 +9,7 @@ from core.filters import technical_service
 from core.middleware.somemiddleware import SomeMiddleware
 from core.middleware.slowtimemiddleware import SlowTimeMiddleware
 from core.middleware.idmiddleware import UserIntervalIDMiddleware, HappyMonthMiddleware
+from core.middleware.weeks import WeekMiddleware
 
 
 async def start_bot(bot: Bot):
@@ -25,6 +26,7 @@ async def main():
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
     dp = Dispatcher()
 
+    dp.callback_query.outer_middleware(WeekMiddleware())
     dp.update.outer_middleware(UserIntervalIDMiddleware())
     dp.message.middleware(HappyMonthMiddleware())
     dp.message.middleware(SomeMiddleware())

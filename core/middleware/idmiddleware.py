@@ -32,4 +32,4 @@ class HappyMonthMiddleware(BaseMiddleware):
         current_month: int = datetime.now().month
         is_happy_month: bool = (interval_id % 12) == current_month
         data['is_happy_month'] = is_happy_month
-        return await handler(event,data)
+        return await handler(event, data)

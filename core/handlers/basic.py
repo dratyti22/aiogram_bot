@@ -1,12 +1,29 @@
 from aiogram import F, Router, Bot
 from aiogram.filters import Command
-from aiogram.types import Message, ReplyKeyboardRemove, Chat
+from aiogram.types import Message, ReplyKeyboardRemove, Chat, CallbackQuery
 from core.keyboards.reply import replay_keyboard
 from core.keyboards.command import get_command
 from aiogram.enums import MessageEntityType
 from core.middleware.idmiddleware import UserIntervalIDMiddleware, HappyMonthMiddleware
+from core.keyboards.inline import get_inline_keyboard
 
 router = Router()
+
+
+@router.message(Command('weekdays'))
+async def get_weedays(message: Message):
+    await message.answer(
+        text="Нажимайте эту кнопку только по будним дням!",
+        reply_markup=get_inline_keyboard()
+    )
+
+
+@router.callback_query(F.data == 'weekdays')
+async def callback_weekdays(callback_query: CallbackQuery):
+    await callback_query.answer(
+        text="Спасибо, что подтвердили своё присутствие!",
+        show_alert=True
+    )
 
 
 @router.message(Command('happymonth'))
