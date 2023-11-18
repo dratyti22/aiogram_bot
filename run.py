@@ -1,4 +1,5 @@
 from aiogram import Bot, Dispatcher
+from aiogram.filters import Command
 import logging
 import asyncio
 from core.handlers import basic, types
@@ -10,9 +11,12 @@ from core.middleware.somemiddleware import SomeMiddleware
 from core.middleware.slowtimemiddleware import SlowTimeMiddleware
 from core.middleware.idmiddleware import UserIntervalIDMiddleware, HappyMonthMiddleware
 from core.middleware.weeks import WeekMiddleware
+from core.middleware.chatactionsendlermeddleware import ChatActionMiddleware
+from core.keyboards.command import get_command
 
 
 async def start_bot(bot: Bot):
+    await get_command(bot)
     await bot.send_message(1356288006, 'Бот запущен')
 
 
@@ -28,12 +32,15 @@ async def main():
 
     dp.callback_query.outer_middleware(WeekMiddleware())
     dp.update.outer_middleware(UserIntervalIDMiddleware())
+    dp.message.middleware(ChatActionMiddleware())
     dp.message.middleware(HappyMonthMiddleware())
     dp.message.middleware(SomeMiddleware())
     dp.message.middleware(SlowTimeMiddleware(sleep_time=1))
 
     dp.startup.register(start_bot)
     dp.shutdown.register(stop_bot)
+
+    dp.message.register(basic.get_help, Command('help'), flags={'long_chat': 'typing'})
 
     dp.include_router(technical_service.router)
     dp.include_router(basic.router)

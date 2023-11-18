@@ -1,13 +1,17 @@
-from aiogram import F, Router, Bot
+from aiogram import F, Router, Bot, flags
 from aiogram.filters import Command
 from aiogram.types import Message, ReplyKeyboardRemove, Chat, CallbackQuery
-from core.keyboards.reply import replay_keyboard
-from core.keyboards.command import get_command
+from core.keyboards.reply import replay_keyboard, get_help_reply
 from aiogram.enums import MessageEntityType
 from core.middleware.idmiddleware import UserIntervalIDMiddleware, HappyMonthMiddleware
 from core.keyboards.inline import get_inline_keyboard
+from core.middleware.chatactionsendlermeddleware import ChatActionMiddleware
 
 router = Router()
+
+
+async def get_help(message: Message):
+    await message.answer('Тут будет помощь', reply_markup=get_help_reply())
 
 
 @router.message(Command('weekdays'))
@@ -40,9 +44,8 @@ async def get_happymonth(
     await message.answer('. '.join(phrases))
 
 
-@router.message(Command('start'))
+@router.message(Command('start'), flags={'long_chat': 'typing'})
 async def get_start(message: Message, bot: Bot):
-    await get_command(bot)
     await message.answer('Привет!', reply_markup=replay_keyboard())
 
 
