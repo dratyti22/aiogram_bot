@@ -11,7 +11,8 @@ from core.middleware.somemiddleware import SomeMiddleware
 from core.middleware.slowtimemiddleware import SlowTimeMiddleware
 from core.middleware.idmiddleware import UserIntervalIDMiddleware, HappyMonthMiddleware
 from core.middleware.weeks import WeekMiddleware
-from core.middleware.chatactionsendlermeddleware import ChatActionMiddleware
+from core.middleware.chatactionsendlermeddleware import ChatMiddleware
+from core.middleware.exemple_chat_action_middleware import ExempleChatActionMiddleware
 from core.keyboards.command import get_command
 
 
@@ -30,9 +31,10 @@ async def main():
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
     dp = Dispatcher()
 
+    dp.message.middleware(ExempleChatActionMiddleware())
     dp.callback_query.outer_middleware(WeekMiddleware())
     dp.update.outer_middleware(UserIntervalIDMiddleware())
-    dp.message.middleware(ChatActionMiddleware())
+    dp.message.middleware(ChatMiddleware())
     dp.message.middleware(HappyMonthMiddleware())
     dp.message.middleware(SomeMiddleware())
     dp.message.middleware(SlowTimeMiddleware(sleep_time=1))
@@ -40,7 +42,7 @@ async def main():
     dp.startup.register(start_bot)
     dp.shutdown.register(stop_bot)
 
-    dp.message.register(basic.get_help, Command('help'), flags={'long_chat': 'typing'})
+    dp.message.register(basic.get_help, Command('help'), flags={'chat_action': 'typing'})
 
     dp.include_router(technical_service.router)
     dp.include_router(basic.router)

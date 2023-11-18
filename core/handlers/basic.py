@@ -5,7 +5,7 @@ from core.keyboards.reply import replay_keyboard, get_help_reply
 from aiogram.enums import MessageEntityType
 from core.middleware.idmiddleware import UserIntervalIDMiddleware, HappyMonthMiddleware
 from core.keyboards.inline import get_inline_keyboard
-from core.middleware.chatactionsendlermeddleware import ChatActionMiddleware
+from core.middleware.chatactionsendlermeddleware import ChatMiddleware
 
 router = Router()
 
