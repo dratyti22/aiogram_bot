@@ -10,6 +10,19 @@ from core.middleware.chatactionsendlermeddleware import ChatMiddleware
 router = Router()
 
 
+@router.message(Command('ban'), F.replay_to_message)
+async def set_ban(message: Message, admin: set[int]):
+    if message.from_user.id not in admin:
+        await message.answer(
+            "У вас недостаточно прав для совершения этого действия"
+        )
+    else:
+        await message.chat.ban(
+            user_id=message.reply_to_message.from_user.id
+        )
+        await message.answer("Нарушитель заблокирован")
+
+
 async def get_help(message: Message):
     await message.answer('Тут будет помощь', reply_markup=get_help_reply())
 
