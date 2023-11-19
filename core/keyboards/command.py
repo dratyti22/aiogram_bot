@@ -28,5 +28,13 @@ async def get_command(bot: Bot):
             command='help',
             description='🚑 помощь'
         ),
+        BotCommand(
+            command='user',
+            description='пользователи бота'
+        ),
+        BotCommand(
+            command='hi',
+            description='поприветствовать'
+        ),
     ]
     await bot.set_my_commands(command, scope=BotCommandScopeDefault())

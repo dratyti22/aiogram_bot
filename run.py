@@ -14,6 +14,7 @@ from core.middleware.weeks import WeekMiddleware
 from core.middleware.chatactionsendlermeddleware import ChatMiddleware
 from core.middleware.exemple_chat_action_middleware import ExempleChatActionMiddleware
 from core.keyboards.command import get_command
+from core.handlers import in_mp
 
 
 async def start_bot(bot: Bot):
@@ -44,6 +45,7 @@ async def main():
 
     dp.message.register(basic.get_help, Command('help'), flags={'chat_action': 'typing'})
 
+    dp.include_router(in_mp.router)
     dp.include_router(technical_service.router)
     dp.include_router(basic.router)
     dp.include_router(types.router)
