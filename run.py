@@ -14,6 +14,9 @@ from core.middleware.weeks import WeekMiddleware
 from core.middleware.chatactionsendlermeddleware import ChatMiddleware
 from core.middleware.exemple_chat_action_middleware import ExempleChatActionMiddleware
 from core.keyboards.command import get_command
+from core.handlers import in_mp
+from core.handlers import admin_changes_in_group
+from config_reader import config
 
 
 async def start_bot(bot: Bot):
@@ -42,17 +45,22 @@ async def main():
     dp.startup.register(start_bot)
     dp.shutdown.register(stop_bot)
 
-    dp.message.register(basic.get_help, Command('help'), flags={'chat_action': 'typing'})
+    dp.message.register(basic.get_help, Command('help'), flags={'chat_action': 'typing'})#os.getenv('main_chat_id')
 
+    dp.include_router(admin_changes_in_group.router)
+    dp.include_router(in_mp.router)
     dp.include_router(technical_service.router)
     dp.include_router(basic.router)
     dp.include_router(types.router)
     dp.include_router(group_games.router)
     dp.include_router(username.router)
 
+    admins = await bot.get_chat_administrators(config.main_chat_id)
+    admin_ids = {admin.user.id for admin in admins}
+
     try:
         await bot.delete_webhook(drop_pending_updates=True)
-        await dp.start_polling(bot)
+        await dp.start_polling(bot, admins=admin_ids)
     finally:
         await bot.session.close()
 

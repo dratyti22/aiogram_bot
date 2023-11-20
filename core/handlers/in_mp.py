@@ -9,9 +9,6 @@ router = Router()
 router.my_chat_member.filter(F.chat.type == "private")
 router.message.filter(F.chat.type == "private")
 
-# Исключительно для примера!
-# В реальной жизни используйте более надёжные
-# источники айди юзеров
 users = {111, 222}
 
 
