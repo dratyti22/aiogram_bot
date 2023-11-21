@@ -9,6 +9,10 @@ async def get_command(bot: Bot):
             description='запустить бота'
         ),
         BotCommand(
+            command='food',
+            description='выбирите еду'
+        ),
+        BotCommand(
             command='dice',
             description='это кубик'
         ),
@@ -29,7 +33,7 @@ async def get_command(bot: Bot):
             description='🚑 помощь'
         ),
         BotCommand(
-            command='user',
+            command='users',
             description='пользователи бота'
         ),
         BotCommand(

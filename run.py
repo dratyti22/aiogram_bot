@@ -16,8 +16,8 @@ from core.middleware.exemple_chat_action_middleware import ExempleChatActionMidd
 from core.keyboards.command import get_command
 from core.handlers import in_mp
 from core.handlers import admin_changes_in_group
-from config_reader import config
-
+# from config_reader import config
+from core.handlers import fsmfood
 
 async def start_bot(bot: Bot):
     await get_command(bot)
@@ -40,7 +40,7 @@ async def main():
     dp.message.middleware(ChatMiddleware())
     dp.message.middleware(HappyMonthMiddleware())
     dp.message.middleware(SomeMiddleware())
-    dp.message.middleware(SlowTimeMiddleware(sleep_time=1))
+    # dp.message.middleware(SlowTimeMiddleware(sleep_time=1))
 
     dp.startup.register(start_bot)
     dp.shutdown.register(stop_bot)
@@ -54,13 +54,14 @@ async def main():
     dp.include_router(types.router)
     dp.include_router(group_games.router)
     dp.include_router(username.router)
+    dp.include_router(fsmfood.router)
 
-    admins = await bot.get_chat_administrators(config.main_chat_id)
-    admin_ids = {admin.user.id for admin in admins}
+    # admins = await bot.get_chat_administrators(config.main_chat_id)
+    # admin_ids = {admin.user.id for admin in admins}
 
     try:
         await bot.delete_webhook(drop_pending_updates=True)
-        await dp.start_polling(bot, admins=admin_ids)
+        await dp.start_polling(bot )#admins=admin_ids
     finally:
         await bot.session.close()
 
