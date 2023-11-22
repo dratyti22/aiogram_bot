@@ -55,8 +55,8 @@ async def get_happymonth(
     await message.answer('. '.join(phrases))
 
 
-@router.message(Command('start'), flags={'long_chat': 'typing'})
-async def get_start(message: Message, bot: Bot):
+@router.message(Command('hello'), flags={'long_chat': 'typing'})
+async def get_start(message: Message):
     await message.answer('Привет!', reply_markup=replay_keyboard())
 
 

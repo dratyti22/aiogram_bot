@@ -26,3 +26,11 @@ def food_replay_keyboard(items: list[str]) -> ReplyKeyboardMarkup:
 def drinks_replay(items: list[str]) -> ReplyKeyboardMarkup:
     row = [KeyboardButton(text=item) for item in items]
     return ReplyKeyboardMarkup(keyboard=[row], resize_keyboard=True)
+
+
+def menu_drinks(items: list[str]) -> ReplyKeyboardMarkup:
+    kb = ReplyKeyboardBuilder()
+    for i in items:
+        kb.button(text=i)
+    kb.adjust(2)
+    return kb.as_markup(resize_keyboard=True)

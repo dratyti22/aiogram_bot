@@ -18,7 +18,8 @@ from core.handlers import in_mp
 from core.handlers import admin_changes_in_group
 # from config_reader import config
 from core.handlers import fsmfood
-from core.fsmcontext_pack import fsmdriks
+from core.fsmcontext_pack import fsmdriks, commonfsm
+from aiogram.fsm.storage.memory import MemoryStorage
 
 
 async def start_bot(bot: Bot):
@@ -34,7 +35,7 @@ async def main():
     load_dotenv()
     bot = Bot(token=os.getenv('TOKEN'))
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(name)s - %(message)s')
-    dp = Dispatcher()
+    dp = Dispatcher(storage=MemoryStorage())
 
     dp.message.middleware(ExempleChatActionMiddleware())
     dp.callback_query.outer_middleware(WeekMiddleware())
@@ -56,7 +57,7 @@ async def main():
     dp.include_router(types_chat.router)
     dp.include_router(group_games.router)
     dp.include_router(username.router)
-    dp.include_routers(fsmfood.router, fsmdriks.router)
+    dp.include_routers(fsmfood.router, fsmdriks.router, commonfsm.router)
 
     # admins = await bot.get_chat_administrators(config.main_chat_id)
     # admin_ids = {admin.user.id for admin in admins}

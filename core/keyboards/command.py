@@ -17,6 +17,10 @@ async def get_command(bot: Bot):
             description='выбоать напитки'
         ),
         BotCommand(
+            command='cancel',
+            description='отмена'
+        ),
+        BotCommand(
             command='dice',
             description='это кубик'
         ),
@@ -42,6 +46,10 @@ async def get_command(bot: Bot):
         ),
         BotCommand(
             command='hi',
+            description='поприветствовать будет добавен в список'
+        ),
+        BotCommand(
+            command='hello',
             description='поприветствовать'
         ),
         BotCommand(
