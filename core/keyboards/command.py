@@ -13,6 +13,10 @@ async def get_command(bot: Bot):
             description='выбирите еду'
         ),
         BotCommand(
+            command='drinks',
+            description='выбоать напитки'
+        ),
+        BotCommand(
             command='dice',
             description='это кубик'
         ),
