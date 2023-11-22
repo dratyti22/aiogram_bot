@@ -45,7 +45,7 @@ async def food_choosing_food(message: types.Message):
 async def food_size_choosing(message: types.Message, state: FSMContext):
     user_data = await state.get_data()
     await message.answer(
-        text=f"Вы выбрали {message.text.lower()} порцию {user_data['chosen_food']}.\n"\
+        text=f"Вы выбрали {message.text.lower()} порцию {user_data['chosen_food']}.\n"
              f"Попробуйте теперь заказать напитки: /drinks",
         reply_markup=ReplyKeyboardRemove()
     )

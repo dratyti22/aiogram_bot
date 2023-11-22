@@ -18,6 +18,11 @@ def get_help_reply() -> ReplyKeyboardMarkup:
     return kb.as_markup(resize_keyboard=True, one_time_keyboard=True)
 
 
-def food_replay_keyboard(items: list[str])-> ReplyKeyboardMarkup:
+def food_replay_keyboard(items: list[str]) -> ReplyKeyboardMarkup:
+    row = [KeyboardButton(text=item) for item in items]
+    return ReplyKeyboardMarkup(keyboard=[row], resize_keyboard=True)
+
+
+def drinks_replay(items: list[str]) -> ReplyKeyboardMarkup:
     row = [KeyboardButton(text=item) for item in items]
     return ReplyKeyboardMarkup(keyboard=[row], resize_keyboard=True)
