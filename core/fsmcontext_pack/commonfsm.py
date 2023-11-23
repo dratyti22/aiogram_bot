@@ -7,7 +7,7 @@ from aiogram.types import Message, ReplyKeyboardRemove
 router = Router()
 
 
-@router.message(Command('start'))
+@router.message(Command('starting'))
 async def cmd_start(message: Message, state: FSMContext):
     await state.clear()
     await message.answer(
