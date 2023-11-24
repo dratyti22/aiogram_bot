@@ -1,6 +1,6 @@
 from typing import Optional
 from aiogram import Router, F
-from aiogram.types import Message
+from aiogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.fsm.context import FSMContext
 from aiogram.filters import Command, CommandObject
 
@@ -53,3 +53,27 @@ async def last_skip(
 async def text_too_long(message: Message):
     await message.answer("Слишком длинный заголовок. Попробуй ещё раз")
     return
+# файл handlers/save_text.py
+@router.message(SaveText.waiting_for_description, F.text.func(len) <= 30)
+@router.message(SaveText.waiting_for_description, Command("skip"))
+async def last_step(message: Message):
+    kb = [[InlineKeyboardButton(
+        text="Попробовать",
+        switch_inline_query="links"
+    )]]
+    await message.answer(
+        text="Ссылка сохранена!",
+        reply_markup=InlineKeyboardMarkup(inline_keyboard=kb)
+    )
+
+# файл handlers/save_images.py
+@router.message(SaveMode.waiting_for_save_start, F.photo[-1].as_("photo"))
+async def save_image(message: Message):
+    kb = [[InlineKeyboardButton(
+        text="Попробовать",
+        switch_inline_query="images"
+    )]]
+    await message.answer(
+        text="Изображение сохранено!",
+        reply_markup=InlineKeyboardMarkup(inline_keyboard=kb)
+    )

@@ -8,7 +8,7 @@ def get_inline_keyboard():
     return keyboard.as_markup()
 
 
-async def cmd_deleted_keyboard():
+def cmd_deleted_keyboard():
     kb = [
         [
             InlineKeyboardButton(
@@ -23,4 +23,4 @@ async def cmd_deleted_keyboard():
             )
         ]
     ]
-    return InlineKeyboardMarkup(inline_keyboard=kb)
+    return InlineKeyboardMarkup(inline_keyboard=kb, resize_keyboard=True)

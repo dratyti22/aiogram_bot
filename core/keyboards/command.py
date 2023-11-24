@@ -58,7 +58,7 @@ async def get_command(bot: Bot):
         ),
         BotCommand(
             command='starting',
-            description='заблокировать'
+            description='что заказать?'
         ),
     ]
     await bot.set_my_commands(command, scope=BotCommandScopeDefault())

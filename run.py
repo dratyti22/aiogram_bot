@@ -20,6 +20,8 @@ from core.handlers import admin_changes_in_group
 from core.handlers import fsmfood
 from core.fsmcontext_pack import fsmdriks, commonfsm
 from aiogram.fsm.storage.memory import MemoryStorage
+# from core.inlinemode import common, deleted_data, inline_mode, save_images, save_text, storage
+
 
 
 async def start_bot(bot: Bot):
@@ -58,6 +60,7 @@ async def main():
     dp.include_router(group_games.router)
     dp.include_router(username.router)
     dp.include_routers(fsmfood.router, fsmdriks.router, commonfsm.router)
+    # dp.include_routers(common.router, deleted_data.router, inline_mode.router, save_images.router, save_text.router)
 
     # admins = await bot.get_chat_administrators(config.main_chat_id)
     # admin_ids = {admin.user.id for admin in admins}

@@ -8,8 +8,17 @@ router = Router()
 
 @router.inline_query(F.query == "links")
 async def show_user_links(inline_query: InlineQuery):
-    def get_message_text():
-        pass
+    def get_message_text(
+            link: str,
+            title: str,
+            description: Optional[str]
+    ) -> str:
+        text_parts = [f'{html.bold(html.quote(title))}']
+        if description:
+            text_parts.append(html.quote(description))
+        text_parts.append("")
+        text_parts.append(link)
+        return "\n".join(text_parts)
 
     results = []
     for link, link_data in get_link_by_id(inline_query.from_user.id).items():
@@ -26,7 +35,6 @@ async def show_user_links(inline_query: InlineQuery):
                 parse_mode="HTML"
             )
         ))
-    # Важно указать is_personal=True!
     await inline_query.answer(results, is_personal=True)
 
 
@@ -40,4 +48,8 @@ async def show_user_images(inline_query: InlineQuery):
                 photo_file_id=file_id
             )
         )
-    await inline_query.answer(results, is_personal=True)
+    await inline_query.answer(
+        results, is_personal=True,
+        switch_pm_text="Добавить ещё »»",
+        switch_pm_parameter="add"
+    )
